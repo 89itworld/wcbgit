@@ -1,0 +1,46 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Amuk
+ * Date: 10-05-2016
+ * Time: 15:40
+ */
+namespace App\Http\Controllers;
+
+use App\Models\WhitecashbackCategories;
+use App\Models\WhitecashbackRetailers;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+
+class HomeController extends Controller
+{
+    /**
+     * Show the profile for the given user.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+
+   public function getIndex()
+    {
+        $categories = WhitecashbackCategories::all();
+
+
+        $cashback = WhitecashbackRetailers::limit(12)->where('featured',"'1'")
+            
+           ->get();
+            
+           
+
+       // $cashback = WhitecashbackRetailers::limit(12)->where('featured', '=', 1)
+          //  ->where('end_date', '=', "0000-00-00 00:00:00")
+          //  ->orWhere('end_date', '>', 'NOW()')
+          //  ->where('status', '=', "'".'active'."'")
+           // ->get();
+        //$cashback=DB::select("SELECT * FROM whitecashback_retailers WHERE featured='1' AND (end_date='0000-00-00 00:00:00' OR end_date > NOW()) AND status='active' ORDER BY RAND() LIMIT 12");
+        echo "<pre>";
+       print_r($cashback);exit;
+        return view('homes.index', ['categories' => $categories,"cashbacks"=>$cashback]);
+    }
+
+}
